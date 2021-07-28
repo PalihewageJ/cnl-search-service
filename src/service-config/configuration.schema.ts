@@ -25,7 +25,7 @@ const configValidationSchema = Joi.object({
   },
   logger: {
     pinoHttp: {
-      name: Joi.string().valid('RAPID').default('RAPID'),
+      name: Joi.string().default('RAPID'),
       level: Joi.string()
         .valid('trace', 'debug', 'info', 'warn', 'error', 'fatal')
         .default('info'),

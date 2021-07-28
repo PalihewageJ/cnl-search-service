@@ -2,10 +2,18 @@ import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { LoggerModule } from 'nestjs-pino';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { GraphQLFederationModule } from '@nestjs/graphql';
+import { join } from 'path';
+import UtilModule from './util/util.module';
 import EmployeeModule from './employee/employee.module';
 import AuthModule from './auth/auth.module';
 import ServiceConfigModule from './service-config/service-config.module';
 import NotificationModule from './notification/notification.module';
+import WebinarApi from './employee/webinar-api.service';
+
+const dataSources = () => ({
+  webinar: new WebinarApi(),
+});
 
 @Module({
   imports: [
@@ -38,6 +46,11 @@ import NotificationModule from './notification/notification.module';
         };
       },
     }),
+    GraphQLFederationModule.forRoot({
+      dataSources,
+      autoSchemaFile: join(process.cwd(), 'src/graphql-schema.gql'),
+    }),
+    UtilModule,
   ],
   controllers: [],
   providers: [],
