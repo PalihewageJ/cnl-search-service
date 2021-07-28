@@ -1,0 +1,9 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: http://openfaas_gateway
+functions:
+  sales-customer-order-service:
+    lang: dockerfile
+    handler: ./sales-customer-order-service
+    image: containter_registry/sales-customer-order-service:latest
