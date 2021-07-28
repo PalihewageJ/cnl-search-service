@@ -1,6 +1,9 @@
+/* eslint-disable no-unused-vars */
 import { NestFactory } from '@nestjs/core';
 import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import newrelic from 'newrelic';
 import AppModule from './app.module';
 
 async function bootstrap() {
