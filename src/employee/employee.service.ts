@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import HttpClientService from 'src/util/http-client.service';
 import EmployeeCreateInput from './type/employee-create.input.type';
 import Employee from './entity/employee.entity';
 import WebinarApi from './webinar-api.service';
-import HttpClientService from 'src/util/http-client.service';
 
 @Injectable()
 export default class EmployeeService {

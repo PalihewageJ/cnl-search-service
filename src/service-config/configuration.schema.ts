@@ -22,6 +22,9 @@ const configValidationSchema = Joi.object({
       username: Joi.string().required(),
       password: Joi.string().required(),
     },
+    redis: {
+      url: Joi.string(),
+    },
   },
   logger: {
     pinoHttp: {
@@ -32,6 +35,14 @@ const configValidationSchema = Joi.object({
       prettyPrint: Joi.boolean().default(false),
       useLevelLabels: Joi.boolean().default(true),
       redact: Joi.array(),
+    },
+  },
+  bull: {
+    redis: {
+      hostname: Joi.string().optional().allow(''),
+      port: Joi.string().optional().allow(''),
+      username: Joi.string().optional().allow(''),
+      password: Joi.string().optional().allow(''),
     },
   },
 });
