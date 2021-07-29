@@ -3,7 +3,7 @@ provider:
   name: openfaas
   gateway: OPENFAAS_GATAWAY_URL
 functions:
-  sales-customer-order-service:
+  rapid-example-service:
     namespace: architect
     lang: dockerfile
     handler: ./
