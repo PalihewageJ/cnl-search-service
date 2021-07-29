@@ -1,16 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import HttpClientService from 'src/util/http-client.service';
-import EmployeeCreateInput from './type/employee-create.input.type';
-import Employee from './entity/employee.entity';
+import Employee from './type/employee.type';
+import EmployeeEntity from './entity/employee.entity';
 import WebinarApi from './webinar-api.service';
+import EmployeeCreateInput from './type/employee-create.input.type';
 
 @Injectable()
 export default class EmployeeService {
   constructor(
-    @InjectRepository(Employee)
-    private _employeeRepository: Repository<Employee>,
+    @InjectRepository(EmployeeEntity)
+    private _employeeRepository: Repository<EmployeeEntity>,
     private _webinarApi: WebinarApi,
     private _httpClient: HttpClientService,
   ) {}
@@ -29,12 +30,27 @@ export default class EmployeeService {
   }
 
   async findAll(): Promise<Employee[]> {
-    const employees: Employee[] = await this._employeeRepository.find();
+    const employees: EmployeeEntity[] = await this._employeeRepository.find();
     return employees;
   }
 
-  async findOne(id: string) {
-    return this._employeeRepository.findOne(id);
+  async findOne(id: string, reqKeys): Promise<Employee> {
+    type T = keyof EmployeeEntity;
+    const fields: T[] = [];
+
+    reqKeys.forEach((field) => {
+      fields.push(field);
+    });
+
+    const employee: Employee = await this._employeeRepository.findOne({
+      select: fields,
+      where: { id },
+    });
+
+    if (!employee) {
+      throw new NotFoundException(`No record found for id ${id}`);
+    }
+    return employee;
   }
 
   async create(employee: EmployeeCreateInput): Promise<Employee> {

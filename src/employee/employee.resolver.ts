@@ -1,9 +1,17 @@
-import { Resolver, Query, Mutation, Args, Context } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  Context,
+  Info,
+} from '@nestjs/graphql';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
-import EmployeeCreateInput from './type/employee-create.input.type';
 import EmployeeService from './employee.service';
-import Employee from './entity/employee.entity';
+
+import Employee from './type/employee.type';
 import Attendees from './type/attendees.type';
+import EmployeeCreateInput from './type/employee-create.input.type';
 
 @Resolver(() => Employee)
 export default class EmployeeResolver {
@@ -25,9 +33,12 @@ export default class EmployeeResolver {
     return this._employeeService.create(employee);
   }
 
-  @Query(() => Employee)
-  findOne(@Args('id') id: string) {
-    return this._employeeService.findOne(id);
+  @Query(() => Employee, { name: 'searchEmployee' })
+  findOne(@Args('id') id: string, @Info() info) {
+    const keys = info.fieldNodes[0].selectionSet.selections.map(
+      (item) => item.name.value,
+    );
+    return this._employeeService.findOne(id, keys);
   }
 
   @Query(() => [Attendees])

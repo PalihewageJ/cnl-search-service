@@ -16,4 +16,7 @@ export default class EmployeeCreateInput {
 
   @Field()
   projectId: string;
+
+  @Field()
+  locationId: string;
 }

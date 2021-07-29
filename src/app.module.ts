@@ -42,7 +42,7 @@ const dataSources = () => ({
           password: config.get('database.pg.password'),
           database: config.get('database.pg.database'),
           entities: ['dist/**/*.entity{.ts,.js}'],
-          synchronize: true,
+          synchronize: false,
         };
       },
     }),

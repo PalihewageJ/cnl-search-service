@@ -4,6 +4,7 @@ provider:
   gateway: OPENFAAS_GATAWAY_URL
 functions:
   sales-customer-order-service:
+    namespace: architect
     lang: dockerfile
     handler: ./
     image: 328680294982.dkr.ecr.ap-southeast-1.amazonaws.com/rapid/rapid-example-service:DOCKER_IMAGE_TAG
