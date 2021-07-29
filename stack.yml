@@ -5,5 +5,5 @@ provider:
 functions:
   sales-customer-order-service:
     lang: dockerfile
-    handler: ./sales-customer-order-service
+    handler: ./
     image: 328680294982.dkr.ecr.ap-southeast-1.amazonaws.com/rapid/rapid-example-service:DOCKER_IMAGE_TAG
