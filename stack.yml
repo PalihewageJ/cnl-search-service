@@ -1,9 +1,9 @@
 version: 1.0
 provider:
   name: openfaas
-  gateway: http://openfaas_gateway
+  gateway: OPENFAAS_GATAWAY_URL
 functions:
   sales-customer-order-service:
     lang: dockerfile
     handler: ./sales-customer-order-service
-    image: containter_registry/sales-customer-order-service:latest
+    image: 328680294982.dkr.ecr.ap-southeast-1.amazonaws.com/rapid/rapid-example-service:DOCKER_IMAGE_TAG
