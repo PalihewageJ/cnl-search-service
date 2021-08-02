@@ -8,3 +8,5 @@ functions:
     lang: dockerfile
     handler: ./
     image: 328680294982.dkr.ecr.ap-southeast-1.amazonaws.com/rapid/rapid-example-service:DOCKER_IMAGE_TAG
+    environment:
+      CONFIG_BASE_URL: "http://gateway.openfaas:8080/function/configuration-mock-service.architect/config"
