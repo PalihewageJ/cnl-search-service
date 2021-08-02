@@ -12,7 +12,12 @@ export default class HttpClientService {
     @InjectPinoLogger() private _logger: PinoLogger,
   ) {}
 
-  async get(url: string, cachettl: number) {
+  async get(url: string, cachettl?: number) {
+    if (!cachettl) {
+      const apiAttendeesObs = this._http.get(url);
+      const apiResponse = (await firstValueFrom(apiAttendeesObs)).data;
+      return apiResponse;
+    }
     let response = JSON.parse(await this._cacheService.readFromCache(url));
     if (!response) {
       this._logger.debug(`cache missed for ${url}`);
