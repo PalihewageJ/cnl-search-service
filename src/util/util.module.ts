@@ -1,16 +1,22 @@
 import { RedisModule } from '@nestjs-modules/ioredis';
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import ServiceConfigModule from 'src/service-config/service-config.module';
 import CacheService from './cache.service';
 import HttpClientService from './http-client.service';
 
 @Module({
   imports: [
     HttpModule,
-    RedisModule.forRoot({
-      config: {
-        url: 'redis://localhost:6379',
-      },
+    RedisModule.forRootAsync({
+      imports: [ServiceConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        config: {
+          url: config.get('database.redis.url'),
+        },
+      }),
     }),
   ],
   providers: [CacheService, HttpClientService],
