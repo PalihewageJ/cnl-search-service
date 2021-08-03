@@ -13,6 +13,7 @@ const configValidationSchema = Joi.object({
       database: Joi.string().required(),
       username: Joi.string().required(),
       password: Joi.string().required(),
+      synchronize: Joi.boolean().optional().default(false),
     },
     mssql: {
       hostname: Joi.string().required(),
