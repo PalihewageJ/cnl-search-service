@@ -48,7 +48,7 @@ const dataSources = () => ({
     }),
     GraphQLFederationModule.forRoot({
       dataSources,
-      autoSchemaFile: join(process.cwd(), 'src/graphql-schema.gql'),
+      autoSchemaFile: true,
     }),
     UtilModule,
   ],
