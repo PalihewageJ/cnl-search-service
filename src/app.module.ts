@@ -49,6 +49,7 @@ const dataSources = () => ({
     GraphQLFederationModule.forRoot({
       dataSources,
       autoSchemaFile: true,
+      path: '/function/rapid-example-service.architect/graphql',
     }),
     UtilModule,
   ],
