@@ -35,9 +35,9 @@ export default class EmployeeResolver {
 
   @Query(() => Employee, { name: 'searchEmployee' })
   findOne(@Args('id') id: string, @Info() info) {
-    const keys = info.fieldNodes[0].selectionSet.selections.map(
-      (item) => item.name.value,
-    );
+    const keys = info.fieldNodes[0].selectionSet.selections
+      .filter((selection) => !selection.selectionSet)
+      .map((item) => item.name.value);
     return this._employeeService.findOne(id, keys);
   }
 
