@@ -12,6 +12,7 @@ import EmployeeService from './employee.service';
 import Employee from './type/employee.type';
 import Attendees from './type/attendees.type';
 import EmployeeCreateInput from './type/employee-create.input.type';
+import { string } from 'joi';
 
 @Resolver(() => Employee)
 export default class EmployeeResolver {
@@ -19,6 +20,11 @@ export default class EmployeeResolver {
     private _employeeService: EmployeeService,
     @InjectPinoLogger() private _logger: PinoLogger,
   ) {}
+
+  @Query(() => string)
+  version() {
+    return 'version 0.0.91';
+  }
 
   @Query(() => [Employee], { name: 'getAllEmployees' })
   async findAll() {
