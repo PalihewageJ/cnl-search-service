@@ -1,4 +1,5 @@
 FROM --platform=${TARGETPLATFORM:-linux/amd64} openfaas/of-watchdog:0.7.2 as watchdog
+FROM 374320175743.dkr.ecr.ap-southeast-1.amazonaws.com/basedockerimage:latest
 
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
