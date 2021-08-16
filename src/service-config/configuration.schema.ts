@@ -46,5 +46,8 @@ const configValidationSchema = Joi.object({
       password: Joi.string().optional().allow(''),
     },
   },
+  graphql: {
+    playground: Joi.boolean().optional().default(false),
+  },
 });
 export default configValidationSchema;

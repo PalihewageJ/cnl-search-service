@@ -46,9 +46,16 @@ const dataSources = () => ({
         };
       },
     }),
-    GraphQLFederationModule.forRoot({
-      dataSources,
-      autoSchemaFile: true,
+    GraphQLFederationModule.forRootAsync({
+      imports: [ServiceConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => {
+        return {
+          dataSources,
+          autoSchemaFile: true,
+          playground: config.get('graphql.playground'),
+        };
+      },
     }),
     UtilModule,
   ],

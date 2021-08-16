@@ -21,7 +21,7 @@ export default class EmployeeResolver {
     @InjectPinoLogger() private _logger: PinoLogger,
   ) {}
 
-  @Query(() => string)
+  @Query(() => String)
   version() {
     return 'version 0.0.91';
   }
