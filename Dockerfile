@@ -17,10 +17,7 @@ RUN chmod +x /usr/bin/fwatchdog
 
 
 WORKDIR /usr/src/app
-RUN rm -f package*.json
-copy package.json .
 COPY --from=build /usr/src/app/dist ./dist
-
 RUN chown node:node -R /usr/src/app/dist
 USER node
 
