@@ -18,7 +18,7 @@ async function fetchConfig() {
     logger.error(err);
     throw new Error(err);
   });
-
+  console.log(configData);
   return configData;
 }
 export default fetchConfig;

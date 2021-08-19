@@ -2,9 +2,24 @@ import * as Joi from 'joi';
 
 const configValidationSchema = Joi.object({
   service: {
-    name: Joi.string().required(),
     port: Joi.number().required().default(3001),
-    stage: Joi.string().valid('dev', 'qa', 'uat', 'prod').default('dev'),
+  },
+  datasource: {
+    m3: {
+      rest: {
+        url: Joi.string().optional(),
+        username: Joi.string().optional(),
+        password: Joi.string().optional(),
+      },
+    },
+    postgraphile: {
+      url: Joi.string().optional(),
+      hostname: Joi.string().optional(),
+      port: Joi.number().optional(),
+      database: Joi.string().optional(),
+      username: Joi.string().optional(),
+      password: Joi.string().optional(),
+    },
   },
   database: {
     pg: {
