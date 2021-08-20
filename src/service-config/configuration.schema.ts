@@ -2,6 +2,9 @@ import * as Joi from 'joi';
 
 const configValidationSchema = Joi.object({
   service: {
+    id: Joi.string().required(),
+    serviceName: Joi.string().required(),
+    stage: Joi.string().required(),
     port: Joi.number().required().default(3001),
   },
   datasource: {
