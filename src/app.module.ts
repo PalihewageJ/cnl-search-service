@@ -7,7 +7,7 @@ import { join } from 'path';
 import UtilModule from './util/util.module';
 import EmployeeModule from './employee/employee.module';
 import AuthModule from './auth/auth.module';
-import ServiceConfigModule from './service-config/service-config.module';
+import ServiceConfigModule from './service-configuration/service-configuration.module';
 import NotificationModule from './notification/notification.module';
 import WebinarApi from './employee/webinar-api.service';
 

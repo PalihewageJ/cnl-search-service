@@ -2,7 +2,7 @@ import { RedisModule } from '@nestjs-modules/ioredis';
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import ServiceConfigModule from 'src/service-config/service-config.module';
+import ServiceConfigModule from 'src/service-configuration/service-configuration.module';
 import CacheService from './cache.service';
 import HttpClientService from './http-client.service';
 
