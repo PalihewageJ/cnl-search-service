@@ -1,7 +1,8 @@
 import { HttpService } from '@nestjs/axios';
 import { Logger } from '@nestjs/common';
+import { AxiosResponse } from 'axios';
 
-import { firstValueFrom } from 'rxjs';
+import { catchError, firstValueFrom, Observable, throwError } from 'rxjs';
 
 import configValidationSchema from './configuration.schema';
 
@@ -11,9 +12,21 @@ async function fetchConfig() {
   const headers = {
     source: 'service',
   };
+  let responseRaw: Observable<AxiosResponse<any>>;
 
   const configurationUrl = `${process.env.CONFIGURATION_BASE_URL}/${process.env.SERVICE_NAME}/${process.env.STAGE}`;
-  const responseRaw = http.get(configurationUrl, { headers });
+
+  responseRaw = http.get(configurationUrl, { headers }).pipe(
+    catchError((e) => {
+      if (e.response.status === 404) {
+        logger.error(
+          `cannot find configurations on ${configurationUrl}. make sure configurations are published to under correct environment`,
+        );
+      }
+      return throwError(() => new Error(e));
+    }),
+  );
+
   logger.log(`fetching configurations from ${configurationUrl}`);
   const respose = await firstValueFrom(responseRaw);
   const configData = respose.data;

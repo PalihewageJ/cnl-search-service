@@ -1,16 +1,16 @@
+#openfaas
 FROM --platform=${TARGETPLATFORM:-linux/amd64} openfaas/of-watchdog:0.7.2 as watchdog
 ARG TARGETPLATFORM
 
+#rapid base
 FROM 328680294982.dkr.ecr.ap-southeast-1.amazonaws.com/rapid/rapid-base:latest as build
-#FROM rapid-base as build
 
 WORKDIR /usr/src/app
-#COPY --from=base /usr/src/app/node_modules ./node_modules
 COPY . .
 RUN npm run build
 
+#rapid production
 FROM 328680294982.dkr.ecr.ap-southeast-1.amazonaws.com/rapid/rapid-production:latest as prod
-#FROM rapid-production as prod
 
 COPY --from=watchdog /fwatchdog /usr/bin/fwatchdog
 RUN chmod +x /usr/bin/fwatchdog
