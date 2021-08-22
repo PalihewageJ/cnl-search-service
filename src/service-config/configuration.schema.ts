@@ -66,6 +66,7 @@ const configValidationSchema = Joi.object({
   },
   graphql: {
     playground: Joi.boolean().optional().default(false),
+    introspection: Joi.boolean().optional().default(false),
   },
 });
 export default configValidationSchema;

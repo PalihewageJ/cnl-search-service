@@ -54,6 +54,7 @@ const dataSources = () => ({
           dataSources,
           autoSchemaFile: true,
           playground: config.get('graphql.playground'),
+          introspection: config.get('graphql.introspection'),
         };
       },
     }),
