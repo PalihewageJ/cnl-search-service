@@ -9,6 +9,6 @@ functions:
     handler: ./
     image: 328680294982.dkr.ecr.ap-southeast-1.amazonaws.com/rapid/rapid-example-service:DOCKER_IMAGE_TAG
     environment:
-      CONFIGURATION_BASE_URL: 'http://gateway.openfaas:8080/function/configuration-service.utility/configurations'
+      CONFIGURATION_BASE_URL: 'http://gateway.openfaas:8080/function/rapid-configuration-service.utility/configurations'
       SERVICE_NAME: 'rapid-example-service'
       STAGE: 'dev'
