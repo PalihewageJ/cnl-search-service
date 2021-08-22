@@ -20,7 +20,7 @@ async function fetchConfig() {
     catchError((e) => {
       if (e.response.status === 404) {
         logger.error(
-          `cannot find configurations on ${configurationUrl}. make sure configurations are published to under correct environment`,
+          `cannot find configurations on ${configurationUrl}. make sure configurations are published under correct service name and environment`,
         );
       }
       return throwError(() => new Error(e));
