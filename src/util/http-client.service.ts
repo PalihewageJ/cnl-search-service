@@ -3,34 +3,53 @@ import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 import CacheService from './cache.service';
+import { AxiosRequestConfig } from 'axios';
+import { HttpClient } from './http.interface';
+import * as https from 'https';
 
 @Injectable()
-export default class HttpClientService {
+export default class HttpClientService implements HttpClient {
+  httpsAgent = new https.Agent({
+    rejectUnauthorized: false,
+  });
+
   constructor(
-    private _http: HttpService,
-    private _cacheService: CacheService,
-    @InjectPinoLogger() private _logger: PinoLogger,
+    public http?: HttpService,
+    public cacheService?: CacheService,
+    @InjectPinoLogger() public logger?: PinoLogger,
   ) {}
 
-  async get(url: string, cachettl?: number) {
+  async get(
+    url: string,
+    cachettl?: number,
+    config?: AxiosRequestConfig,
+    httpsTlsIgnore?: boolean,
+  ): Promise<any> {
+    if (httpsTlsIgnore) {
+      this.http.axiosRef.defaults.httpsAgent = this.httpsAgent;
+    }
     if (!cachettl) {
-      const apiAttendeesObs = this._http.get(url);
+      console.log('cache absent. calling endpoint');
+      if (!this.http) {
+        console.log('http is null');
+      }
+      const apiAttendeesObs = this.http.get(url, config);
       const apiResponse = (await firstValueFrom(apiAttendeesObs)).data;
       return apiResponse;
     }
-    let response = JSON.parse(await this._cacheService.readFromCache(url));
+    let response = JSON.parse(await this.cacheService.readFromCache(url));
     if (!response) {
-      this._logger.debug(`cache missed for ${url}`);
-      const attendeesObs = this._http.get(url);
+      this.logger.debug(`cache missed for ${url}`);
+      const attendeesObs = this.http.get(url, config);
       response = (await firstValueFrom(attendeesObs)).data;
-      await this._cacheService.addStringToCache(
+      await this.cacheService.addStringToCache(
         url,
         JSON.stringify(response),
         cachettl,
       );
-      this._logger.debug(`cache updated for ${url}`);
+      this.logger.debug(`cache updated for ${url}`);
     } else {
-      this._logger.debug(`cache found for ${url}`);
+      this.logger.debug(`cache found for ${url}`);
     }
     return response;
   }

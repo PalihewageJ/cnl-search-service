@@ -18,7 +18,7 @@ async function fetchConfig() {
 
   responseRaw = http.get(configurationUrl, { headers }).pipe(
     catchError((e) => {
-      if (e.response.status === 404) {
+      if (e.response && e.response.status === 404) {
         logger.error(
           `cannot find configurations on ${configurationUrl}. make sure configurations are published under correct service name and environment`,
         );
