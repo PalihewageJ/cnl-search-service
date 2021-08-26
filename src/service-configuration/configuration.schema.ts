@@ -53,6 +53,7 @@ const configValidationSchema = Joi.object({
         .default('info'),
       prettyPrint: Joi.boolean().default(false),
       useLevelLabels: Joi.boolean().default(true),
+      autoLogging: Joi.boolean().optional().default(false),
       redact: Joi.array(),
     },
   },
