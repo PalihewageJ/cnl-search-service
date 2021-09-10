@@ -4,6 +4,7 @@ import { LoggerModule } from 'nestjs-pino';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLFederationModule } from '@nestjs/graphql';
 import { join } from 'path';
+import { PingController } from './ping/ping.controller';
 import UtilModule from './util/util.module';
 import EmployeeModule from './employee/employee.module';
 import AuthModule from './auth/auth.module';
@@ -60,7 +61,7 @@ const dataSources = () => ({
     }),
     UtilModule,
   ],
-  controllers: [],
+  controllers: [PingController],
   providers: [],
 })
 export default class AppModule {}
