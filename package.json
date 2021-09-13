@@ -64,6 +64,7 @@
     "@nestjs/testing": "^8.0.0",
     "@types/express": "^4.17.13",
     "@types/hapi__joi": "^17.1.7",
+    "@types/ioredis": "^4.27.2",
     "@types/jest": "^26.0.24",
     "@types/lodash": "^4.14.171",
     "@types/luxon": "^2.0.3",

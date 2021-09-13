@@ -21,6 +21,6 @@ import HttpClientService from './http-client.service';
     }),
   ],
   providers: [CacheService, HttpClientService, M3ClientService],
-  exports: [HttpClientService, M3ClientService],
+  exports: [HttpClientService, M3ClientService, CacheService],
 })
 export default class UtilModule {}
