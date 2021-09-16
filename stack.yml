@@ -12,3 +12,5 @@ functions:
       CONFIGURATION_BASE_URL: 'http://gateway.openfaas:8080/function/brandix-configuration-service.utility/configurations'
       SERVICE_NAME: 'rapid-example-service'
       STAGE: 'dev'
+    environment_file:
+      - ENV_PATH/app-newrelic.yml  
