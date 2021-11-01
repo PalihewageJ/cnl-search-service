@@ -1,5 +1,5 @@
 #openfaas
-FROM --platform=${TARGETPLATFORM:-linux/amd64} openfaas/of-watchdog:0.7.2 as watchdog
+FROM --platform=${TARGETPLATFORM:-linux/amd64} 328680294982.dkr.ecr.ap-southeast-1.amazonaws.com/openfaas/of-watchdog:0.7.2 as watchdog
 ARG TARGETPLATFORM
 
 #rapid base
