@@ -42,7 +42,10 @@ const configValidationSchema = Joi.object({
       password: Joi.string().required(),
     },
     redis: {
-      url: Joi.string(),
+      host: Joi.string(),
+      port: Joi.number().required(),
+      username: Joi.string(),
+      password: Joi.string(),
     },
   },
   logger: {
