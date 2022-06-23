@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: JOB_BASE_NAME
-  namespace: product
+  namespace: REPLACE_WITH_NAMESPACE
 spec:
   replicas: 1
   selector:
