@@ -1,37 +1,29 @@
-#openfaas
-FROM --platform=${TARGETPLATFORM:-linux/amd64} 328680294982.dkr.ecr.ap-southeast-1.amazonaws.com/openfaas/of-watchdog:0.7.2 as watchdog
-ARG TARGETPLATFORM
-
-#rapid base
+# Base Image for application Buildtime
 FROM 328680294982.dkr.ecr.ap-southeast-1.amazonaws.com/rapid/rapid-base:latest as build
 
+# Set working dir to  /usr/src/app
 WORKDIR /usr/src/app
+
+# Copy application code to WORKDIR
 COPY . .
+
+# Start building artifacts
 RUN npm run build
 
-#rapid production
+# Base Image for application Runtime
 FROM 328680294982.dkr.ecr.ap-southeast-1.amazonaws.com/rapid/rapid-production:latest as prod
 
-COPY --from=watchdog /fwatchdog /usr/bin/fwatchdog
-RUN chmod +x /usr/bin/fwatchdog
-
-
+# Set working dir to  /usr/src/app
 WORKDIR /usr/src/app
+
+# Copy build artifact from the buildtime to runtime
 COPY --from=build /usr/src/app/dist ./dist
+
+# Set Permission to non-root user
 RUN chown node:node -R /usr/src/app/dist
+
+#  Run application using non-root user
 USER node
 
-ENV cgi_headers="true"
-ENV fprocess="node dist/main"
-ENV mode="http"
-ENV upstream_url="http://127.0.0.1:3080"
-
-ENV exec_timeout="10s"
-ENV write_timeout="15s"
-ENV read_timeout="15s"
-
-HEALTHCHECK --interval=3s CMD [ -e /tmp/.lock ] || exit 1
-
-CMD ["fwatchdog"]
-
-#CMD ["npm", "run", "start:prod"]
+# Application run command
+CMD ["node", "dist/main"]
