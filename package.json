@@ -1,6 +1,6 @@
 {
     "name": "rapid-example-service",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "description": "Microservice template for project RAPID ",
     "author": "RAPID team",
     "private": true,
