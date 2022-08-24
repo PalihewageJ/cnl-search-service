@@ -11,6 +11,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   const config = app.get(ConfigService);
   const logger = new Logger();
+  app.enableCors();
   const port = config.get('service.port');
   await app.listen(port, () => {
     logger.log(`server started at port ${port}`);

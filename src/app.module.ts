@@ -12,6 +12,9 @@ import AuthModule from './auth/auth.module';
 import ServiceConfigModule from './service-configuration/service-configuration.module';
 import NotificationModule from './notification/notification.module';
 import WebinarApi from './employee/webinar-api.service';
+import { CnltypedataModule } from './cnltypedata/cnltypedata.module';
+import { MongooseModule } from '@nestjs/mongoose';
+import { RawDataObject, rawDataSchema } from './cnltypedata/schema/raw-data-object.schema';
 
 const dataSources = () => ({
   webinar: new WebinarApi(),
@@ -60,8 +63,32 @@ const dataSources = () => ({
         };
       },
     }),
+    MongooseModule.forRootAsync({
+      imports: [ServiceConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => {
+        return {
+          uri: config.get('database.mongo.url'),
+          dbName: config.get('database.mongo.db'),
+    
+          tls: true,
+          tlsCAFile: join(
+            __dirname,
+            'cnltypedata/cert/rds-combined-ca-bundle.pem',
+          ),
+        };
+      },
+    }),
+    MongooseModule.forFeature([
+      {
+        name: RawDataObject.name,
+        schema: rawDataSchema,
+      },
+      
+    ]),
     UtilModule,
     RndModule,
+    CnltypedataModule
   ],
   controllers: [PingController],
   providers: [],
